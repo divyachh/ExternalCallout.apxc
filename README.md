@@ -14,3 +14,27 @@ public HttpResponse post(string url,Map headers, Map params);
 
 //Call any delete api
 public HttpResponse del(string url,Map headers, Map params);
+
+
+**Call Shopify API using get method and named credential**
+
+//User name and password - change as per your requirement
+Blob headerValue = Blob.valueOf(username + ':' + password);
+String authorizationHeader = 'BASIC ' +EncodingUtil.base64Encode(headerValue);
+
+//Create header map 
+Map headers=new Map {
+'Content-Type' => 'application/json',
+'Authorization'=> authorizationHeader
+};
+
+//Create url parameter 
+Map param=new Map {
+'status'=>'any',
+'limit'=>1,
+'since_id' => '3859435711778'
+};
+
+//Call api using params
+HttpResponse response=new ExternalCallout().get('Shopify', param,headers);
+system.debug(response.getBody());
